@@ -1,0 +1,37 @@
+import music
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+m = music.get_music()
+d = {}
+
+for i in m:
+    genre = i['artist']['terms']
+    key = i['song']['key']
+
+    if genre in d:
+        d[genre].append(key)
+    else:
+        d[genre] = [key]
+
+new_d = {}
+
+for g in d:
+    if len(d[g]) >= 131:
+        new_d[g] = d[g]
+
+for g in new_d:
+    # Currently, executing this code will create a graph of the mean key by genre.
+    # To create a graph of St. Dev. of key by genre, use np.std instead of np.mean in line 32.
+    new_d[g] = np.mean(new_d[g])
+
+k = list(new_d.keys())
+v = list(new_d.values())
+
+print(len(new_d))
+
+plt.bar(k, v, color = ['black', 'brown', 'purple', 'blue', 'cyan', 'orange', 'red', 'yellow', 'violet', 'green'])
+plt.xticks(rotation = 60)
+plt.show()
