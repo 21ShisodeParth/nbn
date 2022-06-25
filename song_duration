@@ -1,0 +1,27 @@
+import music
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+m = music.get_music()
+df = pd.DataFrame(columns = ['Year', 'Duration'])
+
+years = []
+durations = []
+
+for i in m:
+    y = i['song']['year']
+    d = i['song']['duration']
+
+    if d == 0 or y == 0:
+        continue
+    else:
+
+        years.append(float(y))
+        durations.append(float(d))
+
+sizes = [12 for x in years]
+
+plt.scatter(years, durations, sizes)
+plt.show()
+
